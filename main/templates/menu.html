@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for category in categories %}
+        <div>
+            <hi>
+                {{ category }}
+            </hi>
+            {% for dish in category %}
+                <p>{{ dish }} : {{ dish.price }} UAH, {{ dish.ingredients }}</p>
+                <img src="{{ dish.photo.url }}" alt="Зображення страви">
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    {% for photo in gallery %}
+        <img src="{{ photo.photo.url }}" alt="{{ photo.name }}">
+    {% endfor %}
+</body>
+</html>
