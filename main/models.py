@@ -51,4 +51,21 @@ class Gallery(models.Model):
         return self.name
 
 
+class Event(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='url')
+    short_desc = models.TextField(max_length=500, blank=True)
+    desc = models.TextField(max_length=2000, blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    photo = models.ImageField(upload_to='images/events/', blank=True)
+    date_time = models.DateTimeField(null=True, blank=True)
 
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name_plural = 'Events'
+        ordering = ('date_time',)
+        unique_together = ['id', 'slug']
