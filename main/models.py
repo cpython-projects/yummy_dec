@@ -1,4 +1,6 @@
+from django.core.validators import RegexValidator
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 # Create your models here.
@@ -15,6 +17,7 @@ class Category(models.Model):
 
     class Meta:
         ordering = ('sort', 'name')
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
@@ -69,3 +72,47 @@ class Event(models.Model):
         verbose_name_plural = 'Events'
         ordering = ('date_time',)
         unique_together = ['id', 'slug']
+
+
+class ContactInfo(models.Model):
+    phone_number = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
+    city_address = models.CharField(max_length=50)
+    street_address = models.CharField(max_length=50)
+    opening_hours = RichTextField()
+
+    facebook_link = models.CharField(max_length=50)
+    instagram_link = models.CharField(max_length=50)
+    x_link = models.CharField(max_length=50)
+    linkedin_link = models.CharField(max_length=50)
+
+
+class Reservation(models.Model):
+    phone_regex = RegexValidator(regex=r'^\+?(380)?\d{9,15}$', message='Invalid phone number')
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=50, validators=[phone_regex])
+    date = models.DateField()
+    time = models.TimeField()
+    count = models.PositiveSmallIntegerField(default=1)
+    message = models.TextField()
+
+    is_confirmed = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.name} - {self.phone} - {self.email}'
+
+    class Meta:
+        ordering = ('-created_at',)
+
+
+
+
+
+
+
+
