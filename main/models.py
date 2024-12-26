@@ -96,7 +96,7 @@ class Reservation(models.Model):
     date = models.DateField()
     time = models.TimeField()
     count = models.PositiveSmallIntegerField(default=1)
-    message = models.TextField()
+    message = models.TextField(blank=True)
 
     is_confirmed = models.BooleanField(default=False)
 

@@ -17,12 +17,13 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from main.views import home
+from main.views import home, reservation_success
 from yummy_2024 import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('/reservation', reservation_success, name='reservation_success')
 ]
 
 if settings.DEBUG:
