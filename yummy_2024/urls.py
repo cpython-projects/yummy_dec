@@ -16,14 +16,21 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from main.views import home, reservation_success
+from account.views import UserLoginView, UserRegistrationView, logout_view
 from yummy_2024 import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('/reservation', reservation_success, name='reservation_success')
+    path('/reservation', reservation_success, name='reservation_success'),
+
+    path('login/', UserLoginView.as_view(), name='login'),
+    path('register/', UserRegistrationView.as_view(), name='register'),
+    path('logout/', logout_view, name='logout'),
+
+    path('manager/', include('manager.urls')),
 ]
 
 if settings.DEBUG:
