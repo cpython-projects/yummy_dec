@@ -1,0 +1,1 @@
+web: gunicorn yummy_2024.wsgi --log-file –
